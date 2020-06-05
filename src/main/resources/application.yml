@@ -1,0 +1,10 @@
+#spring:
+  #mvc:
+    #资源文件的访问路径，例如：http://127.0.0.1:8787/static/20190123115705.jpg
+    #static-path-pattern: /static/**
+    #resources:
+      #资源文件存放的位置
+      #static-locations: classpath:/static/images/
+#spring:
+#  resources:
+#    static-locations: /static
