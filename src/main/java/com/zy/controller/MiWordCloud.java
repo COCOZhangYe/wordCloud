@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.BASE64Encoder;
 
 
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -76,15 +74,17 @@ public class MiWordCloud {
             e.printStackTrace();
         }
         //wordCloud.writeToFile(htmlFile.getCanonicalPath()); //词云图片生成到临时文件中
+        //deleteFile(htmlFile); // 删除临时文件
+
         wordCloud.writeToFile("src/main/resources/static/images/"+name);
-
-        //deleteFile(htmlFile); // 删除文件
-
-        return "/images/"+name;
+        //return "/images/"+name;
 
         //图片转64位
         //byte[] outputByte = ((ByteArrayOutputStream)output).toByteArray();
         //return org.apache.commons.codec.binary.Base64.encodeBase64String(outputByte);
+
+        String base64 = getImageStr("src/main/resources/static/images/"+name);
+        return base64;
     }
     //删除文件
     private void deleteFile(File file) {
@@ -101,5 +101,22 @@ public class MiWordCloud {
         } else {
             System.out.println("所删除的文件不存在");
         }
+    }
+
+    //图片转64位
+    public String getImageStr(String imgFile) {
+        InputStream inputStream = null;
+        byte[] data = null;
+        try {
+            inputStream = new FileInputStream(imgFile);
+            data = new byte[inputStream.available()];
+            inputStream.read(data);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 加密
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(data);
     }
 }
