@@ -11,13 +11,12 @@ import com.kennycason.kumo.nlp.tokenizers.ChineseWordTokenizer;
 import com.kennycason.kumo.palette.ColorPalette;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.bind.annotation.RestController;
-import sun.misc.BASE64Encoder;
 
 
 import java.awt.*;
 import java.io.*;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -116,7 +115,14 @@ public class MiWordCloud {
             e.printStackTrace();
         }
         // 加密
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(data);
+        Base64.Encoder encoder = Base64.getEncoder();
+        String result = encoder.encodeToString(data);
+        return result;
+//
+//        Base64.Decoder decoder = Base64.getDecoder();
+//        byte[] result = decoder.decode(str);
+
+        //BASE64Encoder encoder = new BASE64Encoder();
+        //return encoder.encode(data);
     }
 }
