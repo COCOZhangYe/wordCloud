@@ -13,4 +13,5 @@ RUN set -xe;\
     wget https://github.com/be5invis/source-han-sans-ttf/releases/download/v2.001.1/source-han-sans-ttf-2.001.1.7z;\
     p7zip -d source-han-sans-ttf-2.001.1.7z;\
     cp SourceHanSansSC-Light.ttf /usr/share/fonts;\
+    rm *;\
     apt-get purge p7zip -y
