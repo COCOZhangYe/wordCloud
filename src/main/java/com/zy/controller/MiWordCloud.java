@@ -9,6 +9,7 @@ import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.nlp.FrequencyAnalyzer;
 import com.kennycason.kumo.nlp.tokenizers.ChineseWordTokenizer;
 import com.kennycason.kumo.palette.ColorPalette;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +43,16 @@ public class MiWordCloud {
         Dimension dimension = new Dimension(500, 500);
         // 此处的设置采用内置常量即可，生成词云对象
         WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);
-        Font font = new Font("SourceHanSansSC-Light", 2, 18);
+        // Font font = new Font("SourceHanSansSC-Light", 2, 18);
+        // System.out.println(new ClassPathResource("SourceHanSansSC-Light.ttf"));
+        Font font = null;
+        try {
+            font = Font.createFont(Font.PLAIN, new ClassPathResource("SourceHanSansSC-Light.ttf").getInputStream());
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         wordCloud.setKumoFont(new KumoFont(font));
         wordCloud.setPadding(2);
         wordCloud.setColorPalette(new ColorPalette(new Color(0xed1941), new Color(0xf26522), new Color(0x845538),new Color(0x8a5d19),new Color(0x7f7522),new Color(0x5c7a29),new Color(0x1d953f),new Color(0x007d65),new Color(0x65c294)));
@@ -76,7 +86,7 @@ public class MiWordCloud {
         //deleteFile(htmlFile); // 删除临时文件
 
         //wordCloud.writeToFile("src/main/resources/static/images/"+name);//将图存在静态资源
-        wordCloud.writeToFile(System.getProperty("java.io.tmpdir")+name);
+        wordCloud.writeToFile(System.getProperty("java.io.tmpdir")+'/'+name);
         System.out.println(System.getProperty("java.io.tmpdir"));
 
         //return "/images/"+name;
@@ -85,7 +95,7 @@ public class MiWordCloud {
         //byte[] outputByte = ((ByteArrayOutputStream)output).toByteArray();
         //return org.apache.commons.codec.binary.Base64.encodeBase64String(outputByte);
 
-        String base64 = getImageStr(System.getProperty("java.io.tmpdir")+name);
+        String base64 = getImageStr(System.getProperty("java.io.tmpdir")+'/'+name);
         return base64;
     }
     //删除文件
