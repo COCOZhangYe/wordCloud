@@ -6,4 +6,11 @@ RUN     set -xe;\
 
 FROM tomcat:jdk8
 COPY --from=0 /build/target/wordCloud-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/
-RUN curl -o /usr/share/fonts/SourceHanSans.ttc https://github.com/adobe-fonts/source-han-sans/releases/download/2.001R/SourceHanSans.ttc
+RUN set -xe;\
+    cd /root;\
+    apt-get update;\
+    apt-get install -y p7zip;\
+    wget https://github.com/be5invis/source-han-sans-ttf/releases/download/v2.001.1/source-han-sans-ttf-2.001.1.7z;\
+    p7zip -d source-han-sans-ttf-2.001.1.7z;\
+    cp SourceHanSans-Light.ttf /usr/share/fonts;\
+    apt-get purge p7zip -y;\
