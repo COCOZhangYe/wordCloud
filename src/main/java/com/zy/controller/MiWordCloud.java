@@ -23,7 +23,7 @@ import java.util.List;
 public class MiWordCloud {
 
     @RequestMapping("/materialData/{words}")
-    public String getWordCloud(@PathVariable("words") List<String> words) throws IOException {
+    public String getWordCloud(@PathVariable("words") List<String> words){
         FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
         frequencyAnalyzer.setWordFrequenciesToReturn(600);
         frequencyAnalyzer.setMinWordLength(2);
@@ -75,14 +75,17 @@ public class MiWordCloud {
         //wordCloud.writeToFile(htmlFile.getCanonicalPath()); //词云图片生成到临时文件中
         //deleteFile(htmlFile); // 删除临时文件
 
-        wordCloud.writeToFile("src/main/resources/static/images/"+name);
+        //wordCloud.writeToFile("src/main/resources/static/images/"+name);//将图存在静态资源
+        wordCloud.writeToFile(System.getProperty("java.io.tmpdir")+name);
+        System.out.println(System.getProperty("java.io.tmpdir"));
+
         //return "/images/"+name;
 
         //图片转64位
         //byte[] outputByte = ((ByteArrayOutputStream)output).toByteArray();
         //return org.apache.commons.codec.binary.Base64.encodeBase64String(outputByte);
 
-        String base64 = getImageStr("src/main/resources/static/images/"+name);
+        String base64 = getImageStr(System.getProperty("java.io.tmpdir")+name);
         return base64;
     }
     //删除文件
