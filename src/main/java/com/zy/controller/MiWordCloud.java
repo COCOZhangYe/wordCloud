@@ -24,6 +24,7 @@ import java.util.List;
 public class MiWordCloud {
 
     @RequestMapping("/materialData")
+    //接受form表单
     public String getWordCloud(@RequestParam(value ="words") List<String> words){
         FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
         frequencyAnalyzer.setWordFrequenciesToReturn(600);
