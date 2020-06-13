@@ -23,7 +23,7 @@ public class MiWordCloud {
     public String getWordCloud(@RequestParam(value ="words") List<String> words){
 
         String name = wordCloudService.wordCloud(words);
-        String base64 = wordCloudService.getImageStr(System.getProperty("java.io.tmpdir")+name);
+        String base64 = wordCloudService.getImageStr(System.getProperty("java.io.tmpdir")+'/'+name);
         return base64;
     }
 
@@ -39,7 +39,7 @@ public class MiWordCloud {
         fos.write(file.getBytes()); // 写入文件
         words = wordCloudService.readTxt(pathName);
         String name = wordCloudService.wordCloud(words);
-        String base64 = wordCloudService.getImageStr(System.getProperty("java.io.tmpdir")+name);
+        String base64 = wordCloudService.getImageStr(System.getProperty("java.io.tmpdir")+'/'+name);
         // 终止后删除临时文件
         htmlFile.deleteOnExit();
         return base64;

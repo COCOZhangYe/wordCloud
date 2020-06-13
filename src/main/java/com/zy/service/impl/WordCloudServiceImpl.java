@@ -134,7 +134,7 @@ public class WordCloudServiceImpl implements WordCloudService {
         //deleteFile(htmlFile); // 删除临时文件
 
         //wordCloud.writeToFile("src/main/resources/static/images/"+name);//将图存在静态资源
-        wordCloud.writeToFile(System.getProperty("java.io.tmpdir")+name);
+        wordCloud.writeToFile(System.getProperty("java.io.tmpdir")+'/'+name);
         System.out.println(System.getProperty("java.io.tmpdir"));
 
         //return "/images/"+name;
